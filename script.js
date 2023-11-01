@@ -1,3 +1,5 @@
+let playerWin=0,computerWin=0
+const outcome=document.getElementById('outcome')
 function getComputersChoice()
 {
     let choices=["rock","paper","scissors"]
@@ -11,64 +13,125 @@ function playGame(playerChoice,computerChoice)
     if(playerChoice=="rock")
     {
         if(computerChoice=="rock")
+        {
+            outcome.innerHTML='It is a draw!'
             return "draw"
+        }
         else if(computerChoice=="paper")
+        {
+            outcome.innerHTML='You Lose!'
             return "lose"
+        }
         else
+        {
+            outcome.innerHTML='You Win!'
             return "win"
+        }
     }
     else if(playerChoice=="paper")
     {
         if(computerChoice=="paper")
+        {
+            outcome.innerHTML='It is a draw!'
             return "draw"
+        }   
         else if(computerChoice=="scissors")
+        {
+            outcome.innerHTML='You Lose!'
             return "lose"
+        }
         else
+        {
+            outcome.innerHTML='You Win!'
             return "win"
+        }
+
     }
     else if(playerChoice=="scissors"){
         if(computerChoice=="scissors")
+        {
+            outcome.innerHTML='It is a draw!'
             return "draw"
+        }
         else if(computerChoice=="rock")
+        {
+            outcome.innerHTML='You Lose!'
             return "lose"
+        }
         else
+        {
+            outcome.innerHTML='You Win!'
             return "win"
+        }
+
     }
     else
     {
         return "wrong input"
     }
 }
-function game()
+function game(prompt)
 {
-    let playerWin=0,computerWin=0
-    let playerChoice
+    let playerChoice=prompt
     let computerChoice
-    let outcome
-    for(let i=0;i<5;i++)
+    let winner
+    computerChoice=getComputersChoice()
+    winner=playGame(playerChoice,computerChoice)
+    
+    if(winner=="win")
     {
-        playerChoice=prompt("Please enter your option: Rock Paper or Scissors")
-        computerChoice=getComputersChoice()
-        outcome=playGame(playerChoice,computerChoice)
-        if(outcome=="win")
-        {
-            playerWin++
-        }
-        else if(outcome=="lose")
-        {
-            computerChoice++
-        }
-        document.getElementById("userwin").innerHTML =playerWin;
-        document.getElementById("computerwin").innerHTML =computerWin;
+        playerWin++
     }
-    if(computerWin>playerWin)
-        document.getElementById("outcome").innerHTML ="You lose";
-    else if(computerWin<playerWin)
-        document.getElementById("outcome").innerHTML ="You win";
-    else {
-        document.getElementById("outcome").innerHTML ="It was a draw";
+    else if(winner=="lose")
+    {
+        computerWin++
+    }
+    document.getElementById("userwin").innerHTML =playerWin;
+    document.getElementById("computerwin").innerHTML =computerWin;
+    if(playerWin==5)
+    {
+        outcome.innerHTML='You win. Press on one of the options to reset.'
+    }
+    else if(computerWin==5)
+    {
+        outcome.innerHTML='You win. Press on one of the options to reset.'
     }
     
 }
 
-game()
+const rockBtn=document.querySelector('#Rock')
+const paperBtn=document.querySelector('#Paper')
+const scissorsBtn=document.querySelector('#Scissors')
+
+
+rockBtn.addEventListener('click', () => {
+    if(playerWin<5 && computerWin<5)
+        game(rockBtn.textContent)
+    else
+    {
+        playerWin=0
+        computerWin=0
+        outcome.innerHTML='Reset! You can go again!'
+
+    }
+})
+paperBtn.addEventListener('click', () => {
+    if(playerWin<5 && computerWin<5)
+        game(paperBtn.textContent)
+    else
+    {
+        playerWin=0
+        computerWin=0
+        outcome.innerHTML='Reset! You can go again!'
+    }
+})
+scissorsBtn.addEventListener('click',() => {
+    if(playerWin<5 && computerWin<5)
+        game(scissorsBtn.textContent)
+    else
+    {
+        playerWin=0
+        computerWin=0
+        outcome.innerHTML='Reset! You can go again!'
+    }
+})
